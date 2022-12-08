@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		942930D1294213350050D3B4 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942930D0294213350050D3B4 /* Extension.swift */; };
 		94F870A4294076C400C59F66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F870A3294076C400C59F66 /* AppDelegate.swift */; };
 		94F870A6294076C400C59F66 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F870A5294076C400C59F66 /* SceneDelegate.swift */; };
 		94F870A8294076C400C59F66 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F870A7294076C400C59F66 /* HomeViewController.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		942930D0294213350050D3B4 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		94F870A0294076C400C59F66 /* Spotify Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F870A3294076C400C59F66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94F870A5294076C400C59F66 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				94F870A3294076C400C59F66 /* AppDelegate.swift */,
 				94F870A5294076C400C59F66 /* SceneDelegate.swift */,
 				94F870AE294076C500C59F66 /* LaunchScreen.storyboard */,
+				942930D0294213350050D3B4 /* Extension.swift */,
 			);
 			path = Recources;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				94F870DA29407B6100C59F66 /* HapticsManager.swift in Sources */,
 				94F870DC29407B8600C59F66 /* AudioTrack.swift in Sources */,
 				94F870C829407AA700C59F66 /* AuthViewController.swift in Sources */,
+				942930D1294213350050D3B4 /* Extension.swift in Sources */,
 				94F870C529407A5400C59F66 /* TabBarController.swift in Sources */,
 				94F870C229407A1300C59F66 /* LibraryViewController.swift in Sources */,
 				94F870DE29407B9100C59F66 /* Playlist.swift in Sources */,

@@ -19,9 +19,11 @@ class AuthManager {
         static let scopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
     }
     
-    var isSignedIn: Bool {
+    public var isSignedIn: Bool {
         return accessToken != nil
     }
+    private var isRefreshingToken = false
+    private var onRefreshBlock = [(String) -> Void]()
         
     private init() {}
     
@@ -95,7 +97,29 @@ class AuthManager {
         task.resume()
     }
     
+    ///  Supplies valid token to be used with API Calls
+    public func withValidToken(completion: @escaping (String) -> Void) {
+        guard !isRefreshingToken else {
+            onRefreshBlock.append(completion)
+            return
+        }
+        
+        if shouldRefreshToken {
+            refreshAccessToken { [weak self] success in
+                if success, let token = self?.accessToken {
+                    completion(token)
+                }
+            }
+        } else if let token = accessToken {
+            completion(token)
+        }
+    }
+    
     public func refreshAccessToken(completion: @escaping (Bool) -> Void) {
+        guard !isRefreshingToken else {
+            return
+        }
+        
         guard shouldRefreshToken else {
             completion(true)
             return
@@ -105,6 +129,7 @@ class AuthManager {
         }
         
         guard let url = URL(string: Constants.tokenAPIURL) else { return }
+        isRefreshingToken = true
         
         var components = URLComponents()
         components.queryItems = [
@@ -126,6 +151,7 @@ class AuthManager {
         request.setValue("Basic \(base64Token)", forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
+            self?.isRefreshingToken = false
             guard let data = data, error == nil else {
                 completion(false)
                 return
@@ -133,7 +159,8 @@ class AuthManager {
             
             do {
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
-                print("refreshing token...")
+                self?.onRefreshBlock.forEach { $0(result.access_token) }
+                self?.onRefreshBlock.removeAll()
                 self?.cacheToken(result: result)
                 completion(true)
             } catch {
@@ -149,7 +176,7 @@ class AuthManager {
         if let refreshToken = result.refresh_token {
             UserDefaults.standard.setValue(refreshToken, forKey: "refresh_token")
         }
-        UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)), forKey: "expirationData")
+        UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)), forKey: "expirationDate")
     }
     
 }
